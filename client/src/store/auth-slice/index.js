@@ -9,13 +9,12 @@ const initialState = {
 
 export const registerUser = createAsyncThunk(
   "/auth/register",
-
   async (formData) => {
     const response = await axios.post(
       "http://localhost:5000/api/auth/register",
       formData,
       {
-        withCredentials: true,
+        withCredentials: true, // enable cookies
       }
     );
 
@@ -31,7 +30,7 @@ export const loginUser = createAsyncThunk(
       "http://localhost:5000/api/auth/login",
       formData,
       {
-        withCredentials: true,
+        withCredentials: true, // enable cookies
       }
     );
 
@@ -47,7 +46,7 @@ export const logoutUser = createAsyncThunk(
       "http://localhost:5000/api/auth/logout",
       {},
       {
-        withCredentials: true,
+        withCredentials: true, // enable cookies
       }
     );
 
@@ -62,7 +61,7 @@ export const checkAuth = createAsyncThunk(
     const response = await axios.get(
       "http://localhost:5000/api/auth/check-auth",
       {
-        withCredentials: true,
+        withCredentials: true,  // enable cookies
         headers: {
           "Cache-Control":
             "no-store, no-cache, must-revalidate, proxy-revalidate",
