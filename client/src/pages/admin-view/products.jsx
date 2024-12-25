@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import ProductImageUpload from "@/components/admin-view/image-upload";
+import AdminProductTile from "@/components/admin-view/product-tile";
 import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CommonForm from "@/components/common/form";
@@ -57,7 +58,7 @@ const AdminProducts = () => {
             formData,
           })
         ).then((data) => {
-          console.log(data, "edit");
+          console.log("editProduct data", data);
 
           if (data?.payload?.success) {
             dispatch(fetchAllProducts());
@@ -85,11 +86,19 @@ const AdminProducts = () => {
   }
 
   function isFormValid() {
-    console.log("isFormValid formData: ", formData);
-    console.log("formData: ", Object.keys(formData));
+    // console.log("isFormValid formData: ", formData);
+    // console.log("formData: ", Object.keys(formData));
     return Object.keys(formData)
-      .filter((currentKey) => currentKey !== "averageReview")
-      .map((key) => formData[key] !== "")
+      .filter((currentKey) => {
+        // console.log("currentKey", currentKey);
+        return currentKey !== "averageReview";
+      })
+      .map((key) => {
+        // console.log("key: ", key);
+        // console.log("formData[key]: ", formData[key]);
+        // console.log("formData[key] !== '': ", formData[key] !== "");
+        return formData[key] !== "";
+      })
       .every((item) => {
         console.log("item", item);
         return item;
@@ -100,12 +109,34 @@ const AdminProducts = () => {
     dispatch(fetchAllProducts());
   }, [dispatch]);
 
+  function handleDelete(getCurrentProductId) {
+    dispatch(deleteProduct(getCurrentProductId)).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchAllProducts());
+      }
+    });
+  }
+
   return (
     <Fragment>
       <div className="mb-5 w-full flex justify-end">
         <Button onClick={() => setOpenCreateProductsDialog(true)}>
           Add New Product
         </Button>
+      </div>
+      <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
+        {productList && productList.length > 0
+          ? productList.map((productItem) => (
+              <AdminProductTile
+                key={productItem._id}
+                setFormData={setFormData}
+                setOpenCreateProductsDialog={setOpenCreateProductsDialog}
+                setCurrentEditedId={setCurrentEditedId}
+                product={productItem}
+                handleDelete={handleDelete}
+              />
+            ))
+          : null}
       </div>
       <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
         <Sheet
