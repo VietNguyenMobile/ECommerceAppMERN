@@ -35,7 +35,7 @@ const addProduct = async (req, res) => {
       averageReview,
     } = req.body;
 
-    console.log(averageReview, "averageReview");
+    // console.log(averageReview, "averageReview");
 
     const newlyCreatedProduct = new Product({
       image,
@@ -67,6 +67,7 @@ const addProduct = async (req, res) => {
 
 const fetchAllProducts = async (req, res) => {
   try {
+    console.log("fetch all products req: ", req.query);
     const listOfProducts = await Product.find({});
     res.status(200).json({
       success: true,

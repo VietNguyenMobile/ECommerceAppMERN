@@ -52,13 +52,13 @@ function CheckAuth({ isAuthenticated, user, children }) {
     return <Navigate to="/unauth-page" />;
   }
 
-  if (
-    isAuthenticated &&
-    user?.role === "admin" &&
-    location.pathname.includes("shop")
-  ) {
-    return <Navigate to="/admin/dashboard" />;
-  }
+  // if (
+  //   isAuthenticated &&
+  //   user?.role === "admin" &&
+  //   location.pathname.includes("shop")
+  // ) {
+  //   return <Navigate to="/admin/dashboard" />;
+  // }
 
   return <>{children}</>;
 }

@@ -9,6 +9,13 @@ dotenv.config();
 const authRouter = require("./src/routes/auth/auth-routes");
 const adminProductsRouter = require("./src/routes/admin/products-routes");
 
+const shopProductsRouter = require("./src/routes/shop/products-routes");
+const shopCartRouter = require("./src/routes/shop/cart-routes");
+const shopAddressRouter = require("./src/routes/shop/address-routes");
+const shopOrderRouter = require("./src/routes/shop/order-routes");
+const shopSearchRouter = require("./src/routes/shop/search-routes");
+const shopReviewRouter = require("./src/routes/shop/review-routes");
+
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log("MongoDB connected"))
@@ -37,6 +44,13 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRouter);
 app.use("/api/admin/products", adminProductsRouter);
+
+app.use("/api/shop/products", shopProductsRouter);
+app.use("/api/shop/cart", shopCartRouter);
+app.use("/api/shop/address", shopAddressRouter);
+app.use("/api/shop/order", shopOrderRouter);
+app.use("/api/shop/search", shopSearchRouter);
+app.use("/api/shop/review", shopReviewRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
